@@ -23,7 +23,6 @@
         <p>هەمی لینکێن مە ل ئێک جهـ</p>
 
         <div class="links">
-            <!-- Lînkên bi klasê "animated-item" -->
             <a href="https://www.tiktok.com/@ehmed.electric?_r=1&_t=ZS-91XMX48A2Gz" target="_blank" class="link-card tiktok animated-item">
                 <i class="fab fa-tiktok"></i>
                 <div class="link-text"><span>TikTok</span><small>Follow us on TikTok</small></div>
@@ -46,21 +45,18 @@
             </a>
         </div>
 
-        <!-- Duikmeyên bi klasê "animated-item" -->
         <div class="action-buttons">
             <button class="share-button animated-item">
                 <i class="fas fa-share-square"></i>
-                <span>بەلاڤکرن</span>
+                <span>Share</span>
             </button>
-
+            <button class="copy-button animated-item">
+                <i class="fas fa-copy"></i>
+                <span>Copy Link</span>
+            </button>
             <button id="showQrButton" class="qr-button animated-item">
                 <i class="fas fa-qrcode"></i>
                 <span>QR Code</span>
-            </button>
-
-            <button class="copy-button animated-item">
-                <i class="fas fa-copy"></i>
-                <span>کۆپیکرنا لینکێ</span>
             </button>
         </div>
 
@@ -74,18 +70,22 @@
         <i class="fas fa-check-circle"></i> Link copied to clipboard!
     </div>
 
+    <!-- Pencereya QR Kodê (Modal ) -->
     <div id="qrModal" class="modal-overlay">
         <div class="modal-content">
             <span id="closeQrButton" class="close-button">&times;</span>
             <h2>Scan to view my profile</h2>
-            <!-- Cihê ku QR kod dê lê xuya bibe -->
             <div id="qrcode"></div>
             <p class="qr-url"></p>
+            <!-- (نوو) Duikmeya Download -->
+            <button id="downloadQrButton" class="download-button animated-item">
+                <i class="fas fa-download"></i>
+                <span>Download QR Code</span>
+            </button>
         </div>
     </div>
-
+    
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-
 </body>
 </html>

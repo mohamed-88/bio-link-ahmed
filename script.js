@@ -1,4 +1,4 @@
-// script.js (Guhertoya Dawî ya bi Logo di QR Kodê de)
+// script.js (Guhertoya Dawî ya bi Çareseriya Download)
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Beşê 1: Anîmasyon û Preloader ---
@@ -68,9 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
         copyButton.addEventListener('click', copyLinkAndShowToast);
     }
 
-    // --- Beşê 3: (باشترکرن) QR Code with Logo Functionality ---
+    // --- Beşê 3: (دروستکرن) QR Code with Download Functionality ---
     const showQrButton = document.getElementById('showQrButton');
     const closeQrButton = document.getElementById('closeQrButton');
+    const downloadQrButton = document.getElementById('downloadQrButton');
     const qrModal = document.getElementById('qrModal');
     const qrcodeContainer = document.getElementById('qrcode');
     const qrUrlText = document.querySelector('.qr-url');
@@ -81,31 +82,27 @@ document.addEventListener('DOMContentLoaded', () => {
             // Tenê carekê QR kodê çêbike
             if (!qrCodeInstance) {
                 qrCodeInstance = new QRCodeStyling({
-                    width: 220,
-                    height: 220,
-                    data: window.location.href, // Lînka te
-                    image: "/img/IMG_7496.PNG", // **(گرنگ) Rêça logoyê te**
-                    dotsOptions: {
-                        color: "#000000",
-                        type: "rounded" // 'dots', 'classy', 'extra-rounded'
-                    },
-                    backgroundOptions: {
-                        color: "#ffffff",
-                    },
-                    imageOptions: {
-                        crossOrigin: "anonymous",
-                        margin: 3, // Valahî li dora logoyê
-                        imageSize: 0.5 // Mezinahiya logoyê (30%)
-                    },
-                    cornersSquareOptions: {
-                        type: "extra-rounded"
-                    },
-                    cornersDotOptions: {
-                        type: "dot"
-                    }
+                    width: 250,
+                    height: 250,
+                    data: window.location.href,
+                    image: "/img/IMG_7496.PNG",
+                    dotsOptions: { color: "#000000", type: "rounded" },
+                    backgroundOptions: { color: "#ffffff" },
+                    imageOptions: { crossOrigin: "anonymous", margin: 5, imageSize: 0.3 },
+                    cornersSquareOptions: { type: "extra-rounded" },
+                    cornersDotOptions: { type: "dot" }
                 });
-                // QR kodê li konteynirê zêde bike
                 qrCodeInstance.append(qrcodeContainer);
+
+                // (گرنگ) Lojîka Download-ê li vir zêde bike, piştî ku qrCodeInstance tê çêkirin
+                if (downloadQrButton) {
+                    downloadQrButton.addEventListener('click', () => {
+                        qrCodeInstance.download({
+                            name: "Ahmed-Electric-QR",
+                            extension: "png"
+                        });
+                    });
+                }
             }
             
             qrUrlText.textContent = window.location.href;
@@ -113,10 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const closeQrModal = () => {
-        if (qrModal) qrModal.classList.remove('visible');
-    };
-
+    const closeQrModal = () => { if (qrModal) qrModal.classList.remove('visible'); };
     if (closeQrButton) closeQrButton.addEventListener('click', closeQrModal);
     if (qrModal) {
         qrModal.addEventListener('click', (event) => {

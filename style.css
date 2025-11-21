@@ -8,6 +8,7 @@
     --card-background: rgba(255, 255, 255, 0.05);
     --border-color: rgba(255, 255, 255, 0.1);
     --primary-blue: #007bff;
+    --hover-color: #343a40;
 }
 
 body {
@@ -26,54 +27,36 @@ body {
 
 /* --- Preloader --- */
 #preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: var(--background-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     z-index: 9999;
     transition: opacity 0.75s ease, visibility 0.75s ease;
 }
-#preloader.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
+#preloader.hidden { opacity: 0; visibility: hidden; }
 .spinner {
-    width: 50px;
-    height: 50px;
+    width: 50px; height: 50px;
     border: 5px solid #444;
     border-top-color: var(--primary-blue);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* --- Konteynir û Nivîs --- */
-.container {
-    width: 100%;
-    max-width: 680px;
-    text-align: center;
-}
+.container { width: 100%; max-width: 680px; text-align: center; }
 h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
 p { font-size: 1.1rem; color: #a9a9b3; margin-bottom: 40px; }
 footer { margin-top: 50px; color: #a9a9b3; font-size: 0.9rem; }
 
-/* --- Stîlên Anîmasyonê yên Giştî --- */
+/* --- Stîlên Anîmasyonê --- */
 .profile-pic, .animated-item {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
-
 .profile-pic {
-    width: 100px;
-    height: 100px;
+    width: 100px; height: 100px;
     border-radius: 50%;
     border: 3px solid var(--border-color);
     object-fit: cover;
@@ -84,19 +67,14 @@ footer { margin-top: 50px; color: #a9a9b3; font-size: 0.9rem; }
 /* --- Lînk --- */
 .links { display: flex; flex-direction: column; gap: 20px; }
 .link-card {
-    background: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 15px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--text-color);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--card-background); border: 1px solid var(--border-color);
+    border-radius: 15px; padding: 20px;
+    display: flex; align-items: center;
+    text-decoration: none; color: var(--text-color);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .link-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px) scale(1.02) !important;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 .link-card i { font-size: 24px; width: 40px; }
@@ -112,157 +90,91 @@ footer { margin-top: 50px; color: #a9a9b3; font-size: 0.9rem; }
 .website { background: linear-gradient(90deg, rgba(58, 123, 213, 0.3), rgba(0, 212, 255, 0.3)); }
 .location { background: linear-gradient(90deg, rgba(23, 162, 184, 0.3), rgba(40, 167, 69, 0.3)); }
 
-/* --- Duikmeyên Çalakiyan (Share & Copy) --- */
+/* --- Duikmeyên Çalakiyan --- */
 .action-buttons { 
     margin-top: 20px; 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
     gap: 10px;
 }
 
 .share-button, .copy-button, .qr-button {
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: white;
+    padding: 12px 20px; 
+    border-radius: 8px;
+    border: 1px solid var(--border-color); 
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; font-size: 1rem;
+}
+.share-button:hover, .copy-button:hover, .qr-button:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-3px) !important;
+}
+
+/* --- Modal, Toast, û Duikmeya Download --- */
+#toast-notification {
+    position: fixed; bottom: -100px; left: 50%;
+    transform: translateX(-50%); background-color: #28a745;
+    color: white; padding: 16px 25px; border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); z-index: 1000;
+    font-weight: bold; display: flex; align-items: center; gap: 10px;
+    transition: all 0.5s ease; opacity: 0; visibility: hidden;
+}
+#toast-notification.toast-visible { opacity: 1; visibility: visible; bottom: 20px; }
+.body-shake { animation: shake-body 0.3s ease-in-out; }
+@keyframes shake-body { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 50% { transform: translateX(3px); } 75% { transform: translateX(-3px); } }
+
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1001; opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.visible { opacity: 1; visibility: visible; }
+.modal-content {
+    background: #1e1e2f; padding: 30px; border-radius: 15px;
+    text-align: center; position: relative;
+    transform: scale(0.9); transition: transform 0.3s ease;
+}
+.modal-overlay.visible .modal-content { transform: scale(1); }
+.close-button { position: absolute; top: 10px; right: 15px; font-size: 28px; color: #aaa; cursor: pointer; transition: color 0.2s; }
+.close-button:hover { color: white; }
+#qrcode { margin: 20px auto; }
+.qr-url { font-size: 0.9rem; color: #a9a9b3; margin-top: 15px; word-break: break-all; }
+
+/* (نوو) Stîlê Duikmeya Download */
+.download-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1); /* Heman rengê duikmeyên din */
     color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
+    padding: 12px 20px; /* Heman padding */
+    border-radius: 8px; /* Heman border-radius */
+    border: 1px solid var(--border-color); /* Heman border */
     cursor: pointer;
-    margin: 10px 5px 0 5px;
+    margin-top: 25px;
+    width: 100%; /* Da ku hemî firehiya modalê bigire */
+    box-sizing: border-box; /* Ji bo ku padding baş kar bike */
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.share-button:hover, 
-.copy-button:hover, 
-.qr-button:hover {
-    background-color: #343a40; /* Rengê gewr yê xweşik ji bo hemîyan */
-    transform: translateY(-3px); /* Efekta bilindbûnê */
-}
-
-/* --- Toast Notification & Shake Effect --- */
-#toast-notification {
-    position: fixed;
-    bottom: -100px; /* Di destpêkê de veşartî */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #28a745;
-    color: white;
-    padding: 16px 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.5s ease;
-    opacity: 0;
-    visibility: hidden;
-}
-#toast-notification.toast-visible {
-    opacity: 1;
-    visibility: visible;
-    bottom: 20px;
-}
-.body-shake { animation: shake-body 0.3s ease-in-out; }
-@keyframes shake-body {
-    0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); }
-    50% { transform: translateX(3px); } 75% { transform: translateX(-3px); }
+.download-button:hover {
+    background-color: var(--hover-color); /* Heman rengê hover yê duikmeyên din */
+    transform: translateY(-2px);
 }
 
 /* --- Media Queries --- */
-@media (max-width: 480px) {
-    h1 { font-size: 2rem; } p { font-size: 1rem; } .link-card { padding: 15px; }
-}
-
-
-/* style.css */
-
-/* --- Stîlê Duikmeya QR Kodê --- */
-.qr-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    margin: 10px 5px 0 5px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-}
-.qr-button:hover {
-    background-color: #343a40; /* Rengekê gewr yê xweşik */
-    transform: translateY(-3px);
-}
-
-/* --- Stîlê Pencereya QR Kodê (Modal) --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-.modal-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-content {
-    background: #1e1e2f;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-}
-.modal-overlay.visible .modal-content {
-    transform: scale(1);
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 28px;
-    color: #aaa;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.close-button:hover {
-    color: white;
-}
-
-#qrcode {
-    margin: 20px auto;
-    /* padding: 10px;
-    background: white;
-    border-radius: 5px;
-    display: inline-block; */
-}
-
-.qr-url {
-    font-size: 0.9rem;
-    color: #a9a9b3;
-    margin-top: 15px;
-    word-break: break-all;
-}
+@media (max-width: 480px) { h1 { font-size: 2rem; } p { font-size: 1rem; } .link-card { padding: 15px; } }
