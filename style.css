@@ -1,3 +1,5 @@
+/* style.css (Guhertoya Dawî ya Têkûz ) */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap' );
 
 :root {
@@ -5,6 +7,7 @@
     --text-color: #ffffff;
     --card-background: rgba(255, 255, 255, 0.05);
     --border-color: rgba(255, 255, 255, 0.1);
+    --primary-blue: #007bff;
 }
 
 body {
@@ -18,12 +21,54 @@ body {
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
+/* --- Preloader --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #444;
+    border-top-color: var(--primary-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Konteynir û Nivîs --- */
 .container {
     width: 100%;
     max-width: 680px;
     text-align: center;
+}
+h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
+p { font-size: 1.1rem; color: #a9a9b3; margin-bottom: 40px; }
+footer { margin-top: 50px; color: #a9a9b3; font-size: 0.9rem; }
+
+/* --- Stîlên Anîmasyonê yên Giştî --- */
+.profile-pic, .animated-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .profile-pic {
@@ -33,27 +78,11 @@ body {
     border: 3px solid var(--border-color);
     object-fit: cover;
     margin-bottom: 20px;
-    background: #fff; /* Add white background to the logo */
+    background: #fff;
 }
 
-h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-p {
-    font-size: 1.1rem;
-    color: #a9a9b3;
-    margin-bottom: 40px;
-}
-
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
+/* --- Lînk --- */
+.links { display: flex; flex-direction: column; gap: 20px; }
 .link-card {
     background: var(--card-background);
     border: 1px solid var(--border-color);
@@ -63,73 +92,177 @@ p {
     align-items: center;
     text-decoration: none;
     color: var(--text-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
-
 .link-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+.link-card i { font-size: 24px; width: 40px; }
+.link-text { flex-grow: 1; text-align: left; margin-left: 15px; }
+.link-text span { display: block; font-size: 1.1rem; font-weight: 600; }
+.link-text small { color: #c7c7d2; }
+.arrow { transition: transform 0.3s ease; }
+.link-card:hover .arrow { transform: translateX(5px); }
 
-.link-card i {
-    font-size: 24px;
-    width: 40px;
+/* Rengên Lînkan */
+.tiktok { background: linear-gradient(90deg, rgba(255, 0, 80, 0.3), rgba(0, 242, 234, 0.3)); }
+.instagram { background: linear-gradient(90deg, rgba(131, 58, 180, 0.3), rgba(253, 29, 29, 0.3), rgba(252, 176, 69, 0.3)); }
+.website { background: linear-gradient(90deg, rgba(58, 123, 213, 0.3), rgba(0, 212, 255, 0.3)); }
+.location { background: linear-gradient(90deg, rgba(23, 162, 184, 0.3), rgba(40, 167, 69, 0.3)); }
+
+/* --- Duikmeyên Çalakiyan (Share & Copy) --- */
+.action-buttons { 
+    margin-top: 20px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
-.link-text {
-    flex-grow: 1;
-    text-align: left;
-    margin-left: 15px;
-}
-
-.link-text span {
-    display: block;
-    font-size: 1.1rem;
+.share-button, .copy-button, .qr-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    margin: 10px 5px 0 5px;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
+    font-size: 1rem;
 }
 
-.link-text small {
-    color: #c7c7d2;
+.share-button:hover, 
+.copy-button:hover, 
+.qr-button:hover {
+    background-color: #343a40; /* Rengê gewr yê xweşik ji bo hemîyan */
+    transform: translateY(-3px); /* Efekta bilindbûnê */
 }
 
-.arrow {
+/* --- Toast Notification & Shake Effect --- */
+#toast-notification {
+    position: fixed;
+    bottom: -100px; /* Di destpêkê de veşartî */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 16px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.5s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+#toast-notification.toast-visible {
+    opacity: 1;
+    visibility: visible;
+    bottom: 20px;
+}
+.body-shake { animation: shake-body 0.3s ease-in-out; }
+@keyframes shake-body {
+    0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); } 75% { transform: translateX(-3px); }
+}
+
+/* --- Media Queries --- */
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; } p { font-size: 1rem; } .link-card { padding: 15px; }
+}
+
+
+/* style.css */
+
+/* --- Stîlê Duikmeya QR Kodê --- */
+.qr-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    margin: 10px 5px 0 5px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.qr-button:hover {
+    background-color: #343a40; /* Rengekê gewr yê xweşik */
+    transform: translateY(-3px);
+}
+
+/* --- Stîlê Pencereya QR Kodê (Modal) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #1e1e2f;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.9);
     transition: transform 0.3s ease;
 }
-
-.link-card:hover .arrow {
-    transform: translateX(5px);
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
 }
 
-/* Color Gradients */
-.tiktok {
-    background: linear-gradient(90deg, rgba(255, 0, 80, 0.3), rgba(0, 242, 234, 0.3));
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
 }
-.instagram {
-    background: linear-gradient(90deg, rgba(131, 58, 180, 0.3), rgba(253, 29, 29, 0.3), rgba(252, 176, 69, 0.3));
-}
-.website {
-    background: linear-gradient(90deg, rgba(58, 123, 213, 0.3), rgba(0, 212, 255, 0.3));
-}
-.location {
-    background: linear-gradient(90deg, rgba(23, 162, 184, 0.3), rgba(40, 167, 69, 0.3));
+.close-button:hover {
+    color: white;
 }
 
-footer {
-    margin-top: 50px;
-    color: #a9a9b3;
+#qrcode {
+    margin: 20px auto;
+    /* padding: 10px;
+    background: white;
+    border-radius: 5px;
+    display: inline-block; */
+}
+
+.qr-url {
     font-size: 0.9rem;
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 2rem;
-    }
-    p {
-        font-size: 1rem;
-    }
-    .link-card {
-        padding: 15px;
-    }
+    color: #a9a9b3;
+    margin-top: 15px;
+    word-break: break-all;
 }
