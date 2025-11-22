@@ -15,10 +15,22 @@
         <div class="spinner"></div>
     </div>
 
+    <!-- (نوو ) Duikmeya Mênyuyê -->
+    <div class="menu-container">
+        <button id="kebab-menu-button" class="kebab-menu">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <!-- (نوو) Mênyuya Veşartî -->
+        <div id="dropdown-menu" class="dropdown-menu">
+            <a href="#" id="qr-menu-item"><i class="fas fa-qrcode"></i> QR Code</a>
+            <a href="#" id="share-menu-item"><i class="fas fa-share-alt"></i> Share</a>
+            <a href="#" id="copy-menu-item"><i class="fas fa-copy"></i> Copy Link</a>
+        </div>
+    </div>
+
     <!-- Konteynira Sereke -->
     <div class="container">
         <img src="/img/IMG_7496.PNG" alt="Ahmed Electric Logo" class="profile-pic">
-
         <h1>Ahmed Electric</h1>
         <p>هەمی لینکێن مە ل ئێک جهـ</p>
 
@@ -45,40 +57,24 @@
             </a>
         </div>
 
-        <div class="action-buttons">
-            <button class="share-button animated-item">
-                <i class="fas fa-share-square"></i>
-                <span>Share</span>
-            </button>
-            <button class="copy-button animated-item">
-                <i class="fas fa-copy"></i>
-                <span>Copy Link</span>
-            </button>
-            <button id="showQrButton" class="qr-button animated-item">
-                <i class="fas fa-qrcode"></i>
-                <span>QR Code</span>
-            </button>
-        </div>
-
         <footer>
             Made with ❤️ by Ahmed Electric
         </footer>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Toast Notification (wekî xwe dimîne ) -->
     <div id="toast-notification">
         <i class="fas fa-check-circle"></i> Link copied to clipboard!
     </div>
 
-    <!-- Pencereya QR Kodê (Modal ) -->
+    <!-- Pencereya QR Kodê (wekî xwe dimîne) -->
     <div id="qrModal" class="modal-overlay">
         <div class="modal-content">
             <span id="closeQrButton" class="close-button">&times;</span>
             <h2>Scan to view my profile</h2>
             <div id="qrcode"></div>
             <p class="qr-url"></p>
-            <!-- (نوو) Duikmeya Download -->
-            <button id="downloadQrButton" class="download-button animated-item">
+            <button id="downloadQrButton" class="download-button">
                 <i class="fas fa-download"></i>
                 <span>Download QR Code</span>
             </button>
