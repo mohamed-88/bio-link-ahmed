@@ -1,4 +1,4 @@
-// script.js (Guhertoya Mênyuya Nû)
+// script.js (Guhertoya Dawî ya bi Çareseriya Girtina Mênyuyê)
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Beşê 1: Anîmasyon û Preloader (wekî xwe dimîne) ---
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startAnimations();
     });
 
-    // --- (نوو) Beşê 2: Lojîka Mênyuyê ---
+    // --- (دروستکرن) Beşê 2: Lojîka Mênyuyê ---
     const kebabMenuButton = document.getElementById('kebab-menu-button');
     const dropdownMenu = document.getElementById('dropdown-menu');
     const qrMenuItem = document.getElementById('qr-menu-item');
@@ -36,13 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyMenuItem = document.getElementById('copy-menu-item');
 
     kebabMenuButton.addEventListener('click', (event) => {
-        event.stopPropagation(); // Nahêle klîk bigihîje 'window'
+        event.stopPropagation(); // Ev rê li ber digire ku klîk yekser bigihîje 'window'
         dropdownMenu.classList.toggle('visible');
     });
 
-    // Girtina mênyuyê dema li derve tê klîk kirin
-    window.addEventListener('click', () => {
-        if (dropdownMenu.classList.contains('visible')) {
+    // (گرنگ) Lojîka nû ji bo girtina mênyuyê
+    document.addEventListener('click', (event) => {
+        const isClickInsideMenu = dropdownMenu.contains(event.target);
+        const isClickOnButton = kebabMenuButton.contains(event.target);
+
+        if (!isClickInsideMenu && !isClickOnButton) {
             dropdownMenu.classList.remove('visible');
         }
     });
@@ -51,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toast = document.getElementById('toast-notification');
     let isToastVisible = false;
 
-    // Fenkşena Kopîkirinê
     const copyLinkAndShowToast = () => {
         if (isToastVisible) return;
         navigator.clipboard.writeText(window.location.href).then(() => {
@@ -69,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Fenkşena Parvekirinê (Share)
     const shareProfile = async () => {
         if (navigator.share) {
             try {
@@ -78,11 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (err.name !== 'AbortError') console.error('Error sharing:', err);
             }
         } else {
-            copyLinkAndShowToast(); // Fallback
+            copyLinkAndShowToast();
         }
     };
 
-    // Fenkşena QR Kodê
     const qrModal = document.getElementById('qrModal');
     const qrcodeContainer = document.getElementById('qrcode');
     const qrUrlText = document.querySelector('.qr-url');
@@ -105,12 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
         qrModal.classList.add('visible');
     };
 
-    // Girêdana Fenkşenan bi Aytemên Mênyuyê
     qrMenuItem.addEventListener('click', (e) => { e.preventDefault(); showQrModal(); dropdownMenu.classList.remove('visible'); });
     shareMenuItem.addEventListener('click', (e) => { e.preventDefault(); shareProfile(); dropdownMenu.classList.remove('visible'); });
     copyMenuItem.addEventListener('click', (e) => { e.preventDefault(); copyLinkAndShowToast(); dropdownMenu.classList.remove('visible'); });
 
-    // Lojîka Girtin û Daxistina QR Kodê (wekî xwe dimîne)
     const closeQrButton = document.getElementById('closeQrButton');
     const downloadQrButton = document.getElementById('downloadQrButton');
     const closeQrModal = () => { if (qrModal) qrModal.classList.remove('visible'); };
