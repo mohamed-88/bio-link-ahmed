@@ -410,3 +410,121 @@ footer {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
+
+
+/* --- (دروستکرن) Stîlên Anîmasyonê yên Pêşketî ji bo Mobîlê --- */
+
+/* Em ê vî klasî bi JavaScript kontrol bikin */
+.link-card.link-active {
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    transform: translateY(-6px) scale(1.04) !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Em stîlê :hover yê berê tenê ji bo amîrên bi mişk (desktop) dihêlin */
+@media (pointer: fine) {
+    .link-card:hover {
+        transform: translateY(-5px) scale(1.02) !important;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+
+/* --- (نوو ) Stîlên Fórma Subscribe --- */
+
+.subscribe-button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background-color: transparent;
+    color: var(--primary-blue);
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: 2px solid var(--primary-blue);
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+}
+.subscribe-button:hover {
+    background-color: var(--primary-blue);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.modal-description {
+    color: var(--text-color-secondary);
+    margin-top: -10px;
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+/* --- (نوو) Stîlên Beşê FAQ --- */
+.faq-section {
+    margin-top: 50px;
+    text-align: left;
+}
+
+.faq-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+
+.faq-container {
+    border-top: 1px solid var(--border-color);
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.faq-question i {
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    padding: 0 10px;
+}
+
+.faq-answer p {
+    color: var(--text-color-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+/* Dema ku pirsiyar vekirî ye */
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-item.active .faq-answer {
+    /* Nirxekê bilind bikar tînin da ku her naverok tê de cih bibe */
+    max-height: 300px; 
+    padding: 0 10px;
+}
+ .faq-question {
+    direction: rtl;
+ }

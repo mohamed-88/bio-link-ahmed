@@ -31,6 +31,7 @@
                 <a href="#" id="share-menu-item"><i class="fas fa-share-alt"></i> Share</a>
                 <a href="#" id="copy-menu-item"><i class="fas fa-copy"></i> Copy Link</a>
                 <a href="#" id="contact-menu-item"><i class="fas fa-envelope"></i> Contact Me</a>
+                <a href="#" id="subscribe-menu-item"><i class="fas fa-bell"></i> Subscribe</a>
                 <hr class="menu-divider"> <!-- Xêzek ji bo veqetandinê -->
                 <a href="#" id="theme-menu-item">
                     <i class="fas fa-adjust"></i> <!-- Îkon dê bi JS biguhere -->
@@ -69,9 +70,43 @@
             </a>
         </div>
 
-        <!-- <button id="open-contact-form" class="contact-button animated-item">
-            <i class="fas fa-envelope"></i> Contact Me
-        </button> -->
+        <!-- ئەڤە ئەگەر من ڤیا دێ داهاتوی لێ زێدە کەم -->
+
+        <!-- <div class="faq-section animated-item">
+            <h2>بسیارێت زور</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>ئایا هوون کارێ چێکرنا مالان دکەن؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div align="right" class="faq-answer">
+                        <p>بەلێ، ئەم هەموو جورە کارێن کارەبێ بۆ مالێن نوو و کەڤن دکەین، ژ دامەزراندنا وایران بگرە هەتا دانانا پلاکان و لایتان.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>نرخێ کارێ هەوە چاوایە؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div align="right" class="faq-answer">
+                        <p>نرخێ کارێ مە لدیڤ جور و قەبارێ پرۆژەی دهێتە دیارکرن. بۆ وەرگرتنا نرخەکێ دروست، هیڤیدارین پەیوەندیێ ب مە بکەن دا سەرەدانا جهێ پرۆژەی بکەین.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>ئایا هوون ل دەرڤەی دهۆکێ کار دکەن؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div align="right" class="faq-answer">
+                        <p>بەلێ، ئەم بۆ پرۆژێن مەزن دشێین ل دەڤەرێن نێزیک ژی کار بکەین. هیڤیدارین بۆ زانیاریێن زێدەتر پەیوەندیێ ب مە بکەن.</p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
 
         <footer>
             Made with ❤️ by Ahmed Electric
@@ -120,6 +155,26 @@
                 <i class="fas fa-download"></i>
                 <span>Download QR Code</span>
             </button>
+        </div>
+    </div>
+
+        <!-- (نوو) Pencereya Fórma Subscribe (Modal) -->
+    <div id="subscribeModal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="closeSubscribeButton" class="close-button">&times;</span>
+            <h2>Subscribe</h2>
+            <p class="modal-description">Get notified when I post new content or projects.</p>
+            <form id="subscribe-form" action="https://formspree.io/f/xovbbavn" method="POST">
+                <div class="form-group">
+                    <label for="subscribe-email">Email Address</label>
+                    <input type="email" id="subscribe-email" name="email" required placeholder="your@email.com">
+                </div>
+                <button type="submit" class="submit-button">
+                    <span class="button-text">Subscribe</span>
+                    <span class="button-loader" style="display: none;"></span>
+                </button>
+                <p id="subscribe-form-status"></p>
+            </form>
         </div>
     </div>
     
