@@ -1,14 +1,30 @@
-/* style.css (Guhertoya Dawî ya bi Çareseriya Mênyuyê) */
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap' );
 
 :root {
+    /* Rengên Dark Mode (Default) */
     --background-color: #12121c;
     --text-color: #ffffff;
+    --text-color-secondary: #a9a9b3;
     --card-background: rgba(255, 255, 255, 0.05);
     --border-color: rgba(255, 255, 255, 0.1);
+    --hover-color: rgba(255, 255, 255, 0.1);
+    --modal-background: #1e1e2f;
+    --menu-background: #2a2a3c;
     --primary-blue: #007bff;
-    --hover-color: #343a40;
+    --spinner-border: #444;
+}
+
+html.light-mode {
+    /* Rengên Light Mode */
+    --background-color: #f0f2f5;
+    --text-color: #1c1e21;
+    --text-color-secondary: #65676b;
+    --card-background: #ffffff;
+    --border-color: #dce1e6;
+    --hover-color: #e9ecef;
+    --modal-background: #ffffff;
+    --menu-background: #ffffff;
+    --spinner-border: #ddd;
 }
 
 body {
@@ -23,6 +39,7 @@ body {
     padding: 20px;
     box-sizing: border-box;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* --- Preloader --- */
@@ -33,32 +50,36 @@ body {
     z-index: 9999;
     transition: opacity 0.75s ease, visibility 0.75s ease;
 }
+
 #preloader.hidden { 
-    opacity: 0; 
-    visibility: hidden;
+    opacity: 0; visibility: hidden; 
 }
 
 .spinner {
     width: 50px; height: 50px;
-    border: 5px solid #444;
+    border: 5px solid var(--spinner-border);
     border-top-color: var(--primary-blue);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* --- (نوو) Stîlê Mênyuyê --- */
-.menu-container {
+/* --- Kontrolên Jorîn (Mênyu) --- */
+.header-controls {
     position: absolute;
     top: 20px;
     right: 20px;
     z-index: 1002;
 }
+.menu-container { 
+    position: relative; 
+}
+
 .kebab-menu {
     background: none;
     border: none;
     color: var(--text-color);
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
     padding: 10px;
 }
@@ -66,38 +87,46 @@ body {
     position: absolute;
     top: 45px;
     right: 0;
-    background: #2a2a3c;
+    background: var(--menu-background);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    width: 200px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 220px;
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
-.dropdown-menu.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.dropdown-menu.visible { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateY(0); 
 }
+
 .dropdown-menu a {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    display: flex; align-items: center; gap: 15px;
     padding: 15px 20px;
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     transition: background-color 0.2s ease;
 }
-.dropdown-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+
+.dropdown-menu a:hover { 
+    background-color: var(--hover-color); 
 }
-.dropdown-menu a i {
-    width: 20px;
+
+.dropdown-menu a i { 
+    width: 20px; 
     text-align: center;
+}
+
+.menu-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 5px 15px;
 }
 
 /* --- Konteynir û Nivîs --- */
@@ -110,19 +139,19 @@ body {
 h1 { 
     font-size: 2.5rem; 
     font-weight: 700; 
-    margin: 0; 
+    margin: 0;
 }
 
 p { 
     font-size: 1.1rem; 
-    color: #a9a9b3; 
-    margin-bottom: 40px;
+    color: var(--text-color-secondary); 
+    margin-bottom: 40px; 
 }
 
 footer { 
     margin-top: 50px; 
-    color: #646464; 
-    font-size: 0.9rem;
+    color: var(--text-color-secondary); 
+    font-size: 0.9rem; 
 }
 
 /* --- Stîlên Anîmasyonê --- */
@@ -141,7 +170,7 @@ footer {
     background: #fff;
 }
 
-/* --- Lînk (wekî xwe dimîne) --- */
+/* --- Lînk --- */
 .links { 
     display: flex; 
     flex-direction: column; 
@@ -149,15 +178,17 @@ footer {
 }
 
 .link-card {
-    background: var(--card-background); border: 1px solid var(--border-color);
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
     border-radius: 15px; padding: 20px;
     display: flex; align-items: center;
     text-decoration: none; color: var(--text-color);
     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 .link-card:hover {
     transform: translateY(-5px) scale(1.02) !important;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 .link-card i { 
     font-size: 24px; 
@@ -175,24 +206,22 @@ footer {
     font-size: 1.1rem; 
     font-weight: 600; 
 }
-
 .link-text small { 
-    color: #c7c7d2; 
+    color: var(--text-color-secondary); 
 }
 
 .arrow { 
-    transition: transform 0.3s ease;
- }
+    transition: transform 0.3s ease; 
+}
 
 .link-card:hover .arrow { 
     transform: translateX(5px); 
 }
 
-/* Rengên Lînkan (wekî xwe dimîne) */
+/* Rengên Lînkan */
 .tiktok { 
     background: linear-gradient(90deg, rgba(255, 0, 80, 0.3), rgba(0, 242, 234, 0.3)); 
 }
-
 .instagram { 
     background: linear-gradient(90deg, rgba(131, 58, 180, 0.3), rgba(253, 29, 29, 0.3), rgba(252, 176, 69, 0.3)); 
 }
@@ -205,10 +234,7 @@ footer {
     background: linear-gradient(90deg, rgba(23, 162, 184, 0.3), rgba(40, 167, 69, 0.3)); 
 }
 
-/* --- (ژێبرن) Stîlê Duikmeyên Kevin --- */
-/* Beşê ".action-buttons" û yên din hatin jêbirin */
-
-/* --- Modal, Toast, û Duikmeya Download (wekî xwe dimîne) --- */
+/* --- Modal, Toast, û Duikmeya Download --- */
 #toast-notification {
     position: fixed; bottom: -100px; left: 50%;
     transform: translateX(-50%); background-color: #28a745;
@@ -217,21 +243,21 @@ footer {
     font-weight: bold; display: flex; align-items: center; gap: 10px;
     transition: all 0.5s ease; opacity: 0; visibility: hidden;
 }
-
-#toast-notification.toast-visible {
-     opacity: 1;
-      visibility: visible; 
-      bottom: 20px; 
+#toast-notification.toast-visible { 
+    opacity: 1; 
+    visibility: visible; 
+    bottom: 20px; 
 }
 
 .body-shake { 
     animation: shake-body 0.3s ease-in-out; 
 }
-@keyframes shake-body { 0%, 100% { 
-    transform: translateX(0); } 25% { 
-    transform: translateX(-3px); } 50% { 
-    transform: translateX(3px); } 75% {
-    transform: translateX(-3px); } 
+
+@keyframes shake-body { 
+    0%, 100% { transform: translateX(0); } 
+    25% { transform: translateX(-3px); } 
+    50% { transform: translateX(3px); } 
+    75% { transform: translateX(-3px); } 
 }
 
 .modal-overlay {
@@ -248,13 +274,13 @@ footer {
 }
 
 .modal-content {
-    background: #1e1e2f; padding: 30px; border-radius: 15px;
+    background: var(--modal-background);
+    padding: 30px; border-radius: 15px;
     text-align: center; position: relative;
     transform: scale(0.9); transition: transform 0.3s ease;
 }
-
 .modal-overlay.visible .modal-content { 
-    transform: scale(1);
+    transform: scale(1); 
 }
 
 .close-button { 
@@ -264,12 +290,12 @@ footer {
     font-size: 28px; 
     color: #aaa; 
     cursor: pointer; 
-    transition: color 0.2s;
+    transition: color 0.2s; 
 }
 
 .close-button:hover { 
-    color: white;
- }
+    color: var(--text-color); 
+}
 
 #qrcode { 
     margin: 20px auto; 
@@ -277,8 +303,8 @@ footer {
 
 .qr-url { 
     font-size: 0.9rem; 
-    color: #a9a9b3; 
-    margin-top: 15px; 
+    color: var(--text-color-secondary); 
+    margin-top: 15px;
     word-break: break-all;
 }
 
@@ -295,9 +321,92 @@ footer {
     transform: translateY(-2px); 
 }
 
-/* --- Media Queries (wekî xwe dimîne) --- */
+/* --- Media Queries --- */
 @media (max-width: 480px) { 
     h1 { font-size: 2rem; } 
     p { font-size: 1rem; } 
-    .link-card { padding: 15px; }
+    .link-card { padding: 15px; } 
+}
+
+/* --- (نوو) Stîlê Duikmeya Contact --- */
+.contact-button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.contact-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* --- (نوو) Stîlê Fórma Peywendiyê --- */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-button:hover { background-color: #0056b3; }
+#form-status {
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.button-loader {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }

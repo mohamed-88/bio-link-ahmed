@@ -1,7 +1,77 @@
-// script.js (Guhertoya Dawî ya bi Çareseriya Girtina Mênyuyê)
+// script.js (Guhertoya Dawî ya bi Çareseriya Formspree AJAX)
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Beşê 1: Anîmasyon û Preloader (wekî xwe dimîne) ---
+    // --- Beşên 1, 2, 3 (Theme, Anîmasyon, Mênyu, hwd.) wekî xwe dimînin ---
+    // ... (Hemî koda te ya berê li vir e) ...
+    const themeMenuItem = document.getElementById('theme-menu-item');
+    const themeIcon = themeMenuItem.querySelector('i');
+    const themeText = themeMenuItem.querySelector('span');
+    const htmlElement = document.documentElement;
+
+    const applyTheme = (theme) => {
+        htmlElement.classList.remove('light-mode');
+        if (theme === 'light') {
+            htmlElement.classList.add('light-mode');
+        }
+    };
+
+    const updateThemeUI = (theme) => {
+        if (theme === 'light') {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Theme: Light';
+        } else if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Theme: Dark';
+        } else { // Auto
+            themeIcon.className = 'fas fa-adjust';
+            themeText.textContent = 'Theme: Auto';
+        }
+    };
+
+    const cycleTheme = () => {
+        const currentTheme = localStorage.getItem('theme') || 'auto';
+        let newTheme;
+
+        if (currentTheme === 'auto') newTheme = 'dark';
+        else if (currentTheme === 'dark') newTheme = 'light';
+        else newTheme = 'auto';
+
+        if (newTheme === 'auto') {
+            localStorage.removeItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(prefersDark ? 'dark' : 'light');
+        } else {
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        }
+        updateThemeUI(newTheme);
+    };
+
+    const initializeTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            applyTheme(savedTheme);
+            updateThemeUI(savedTheme);
+        } else {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(prefersDark ? 'dark' : 'light');
+            updateThemeUI('auto');
+        }
+    };
+
+    initializeTheme();
+    themeMenuItem.addEventListener('click', (e) => {
+        e.preventDefault();
+        cycleTheme();
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+            updateThemeUI('auto');
+        }
+    });
+
     const preloader = document.getElementById('preloader');
     const profilePic = document.querySelector('.profile-pic');
     const itemsToAnimate = document.querySelectorAll('.animated-item');
@@ -28,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startAnimations();
     });
 
-    // --- (دروستکرن) Beşê 2: Lojîka Mênyuyê ---
     const kebabMenuButton = document.getElementById('kebab-menu-button');
     const dropdownMenu = document.getElementById('dropdown-menu');
     const qrMenuItem = document.getElementById('qr-menu-item');
@@ -36,21 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyMenuItem = document.getElementById('copy-menu-item');
 
     kebabMenuButton.addEventListener('click', (event) => {
-        event.stopPropagation(); // Ev rê li ber digire ku klîk yekser bigihîje 'window'
+        event.stopPropagation();
         dropdownMenu.classList.toggle('visible');
     });
 
-    // (گرنگ) Lojîka nû ji bo girtina mênyuyê
     document.addEventListener('click', (event) => {
         const isClickInsideMenu = dropdownMenu.contains(event.target);
         const isClickOnButton = kebabMenuButton.contains(event.target);
-
         if (!isClickInsideMenu && !isClickOnButton) {
             dropdownMenu.classList.remove('visible');
         }
     });
 
-    // --- Beşê 3: Fenkşenên Çalakiyan (Share, Copy, QR) ---
     const toast = document.getElementById('toast-notification');
     let isToastVisible = false;
 
@@ -119,6 +185,79 @@ document.addEventListener('DOMContentLoaded', () => {
             if (qrCodeInstance) {
                 qrCodeInstance.download({ name: "Ahmed-Electric-QR", extension: "png" });
             }
+        });
+    }
+
+    // --- (دروستکرن) Beşê Dawî: Lojîka Fórma Peywendiyê ---
+    const contactModal = document.getElementById('contactModal');
+    const contactMenuItem = document.getElementById('contact-menu-item');
+    const closeContactButton = document.getElementById('closeContactButton');
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+    const submitButton = contactForm.querySelector('.submit-button');
+    const buttonText = submitButton.querySelector('.button-text');
+    const buttonLoader = submitButton.querySelector('.button-loader');
+
+    const openContactModal = () => contactModal.classList.add('visible');
+    const closeContactModal = () => contactModal.classList.remove('visible');
+
+    if (contactMenuItem) {
+        contactMenuItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            openContactModal();
+            dropdownMenu.classList.remove('visible');
+        });
+    }
+    
+    if (closeContactButton) closeContactButton.addEventListener('click', closeContactModal);
+    if (contactModal) contactModal.addEventListener('click', (event) => {
+        if (event.target === contactModal) closeContactModal();
+    });
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // (گرنگ) Rê li ber refreshkirina rûpelê digire
+
+            const formData = new FormData(contactForm);
+            
+            buttonText.style.display = 'none';
+            buttonLoader.style.display = 'block';
+            submitButton.disabled = true;
+            formStatus.textContent = '';
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    formStatus.textContent = "Thanks! Your message has been sent.";
+                    formStatus.style.color = '#28a745';
+                    contactForm.reset();
+                    setTimeout(() => {
+                        closeContactModal();
+                        formStatus.textContent = '';
+                    }, 4000);
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            formStatus.textContent = data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            formStatus.textContent = "Oops! There was a problem submitting your form.";
+                        }
+                        formStatus.style.color = '#dc3545';
+                    })
+                }
+            }).catch(error => {
+                formStatus.textContent = "Oops! There was a network error.";
+                formStatus.style.color = '#dc3545';
+            }).finally(() => {
+                buttonText.style.display = 'block';
+                buttonLoader.style.display = 'none';
+                submitButton.disabled = false;
+            });
         });
     }
 });

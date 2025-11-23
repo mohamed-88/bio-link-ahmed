@@ -5,34 +5,38 @@
     <title>Ahmed Electric | Links</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- (گرنگ) ئایکۆنێن زیرەک بۆ Light/Dark Mode -->
-    <!-- ئایکۆنێ سەرەکی (Fallback) -->
+    <!-- ئایکۆنێن زیرەک بۆ Light/Dark Mode -->
     <link rel="icon" type="image/png" href="/img/IMG_7496.PNG" />
-    <!-- ئایکۆن بۆ Light Mode -->
     <link rel="apple-touch-icon" media="(prefers-color-scheme: light)" href="/img/icon-light.png" />
-    <!-- ئایکۆن بۆ Dark Mode -->
     <link rel="apple-touch-icon" media="(prefers-color-scheme: dark)" href="/img/icon-dark.png" />
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <!-- ... (Koda te ya mayî wekî xwe dimîne ) ... -->
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner"></div>
     </div>
 
-    <!-- (نوو) Duikmeya Mênyuyê -->
-    <div class="menu-container">
-        <button id="kebab-menu-button" class="kebab-menu">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
-        <!-- (نوو) Mênyuya Veşartî -->
-        <div id="dropdown-menu" class="dropdown-menu">
-            <a href="#" id="qr-menu-item"><i class="fas fa-qrcode"></i> QR Code</a>
-            <a href="#" id="share-menu-item"><i class="fas fa-share-alt"></i> Share</a>
-            <a href="#" id="copy-menu-item"><i class="fas fa-copy"></i> Copy Link</a>
+    <!-- Kontrolên Jorîn -->
+    <div class="header-controls">
+        <div class="menu-container">
+            <button id="kebab-menu-button" class="kebab-menu">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div id="dropdown-menu" class="dropdown-menu">
+                <!-- (دروستکرن ) Rêzbendiya nû -->
+                <a href="#" id="qr-menu-item"><i class="fas fa-qrcode"></i> QR Code</a>
+                <a href="#" id="share-menu-item"><i class="fas fa-share-alt"></i> Share</a>
+                <a href="#" id="copy-menu-item"><i class="fas fa-copy"></i> Copy Link</a>
+                <a href="#" id="contact-menu-item"><i class="fas fa-envelope"></i> Contact Me</a>
+                <hr class="menu-divider"> <!-- Xêzek ji bo veqetandinê -->
+                <a href="#" id="theme-menu-item">
+                    <i class="fas fa-adjust"></i> <!-- Îkon dê bi JS biguhere -->
+                    <span>Theme: Auto</span> <!-- Nivîs dê bi JS biguhere -->
+                </a>
+            </div>
         </div>
     </div>
 
@@ -65,17 +69,47 @@
             </a>
         </div>
 
+        <!-- <button id="open-contact-form" class="contact-button animated-item">
+            <i class="fas fa-envelope"></i> Contact Me
+        </button> -->
+
         <footer>
             Made with ❤️ by Ahmed Electric
         </footer>
     </div>
 
-    <!-- Toast Notification (wekî xwe dimîne ) -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="closeContactButton" class="close-button">&times;</span>
+            <h2>Send a Message</h2>
+            <form id="contact-form" action="https://formspree.io/f/movbrnjl" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">
+                    <span class="button-text">Send Message</span>
+                    <span class="button-loader" style="display: none;"></span>
+                </button>
+                <p id="form-status"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
     <div id="toast-notification">
         <i class="fas fa-check-circle"></i> Link copied to clipboard!
     </div>
 
-    <!-- Pencereya QR Kodê (wekî xwe dimîne) -->
+    <!-- Pencereya QR Kodê (Modal ) -->
     <div id="qrModal" class="modal-overlay">
         <div class="modal-content">
             <span id="closeQrButton" class="close-button">&times;</span>
