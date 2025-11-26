@@ -1,6 +1,33 @@
 // script.js (Guhertoya Dawî ya bi Çareseriya Mênyuyê ya Garantîkirî)
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- Beşê 0: Lojîka Visitor Counter ---
+    const initializeVisitorCounter = () => {
+        const visitorCountElement = document.getElementById('visitor-count');
+        if (!visitorCountElement) return;
+
+        // Get current count from localStorage
+        let visitorCount = parseInt(localStorage.getItem('visitorCount')) || 0;
+        
+        // Increment the count
+        visitorCount++;
+        
+        // Save the updated count to localStorage
+        localStorage.setItem('visitorCount', visitorCount);
+        
+        // Update the display
+        visitorCountElement.textContent = visitorCount;
+        
+        // Add pop animation
+        visitorCountElement.classList.add('pop-animation');
+        setTimeout(() => {
+            visitorCountElement.classList.remove('pop-animation');
+        }, 400);
+    };
+
+    // Initialize visitor counter when page loads
+    initializeVisitorCounter();
+
     // --- (نوو و سادەکری) Beşê Lojîka Mênyuyê ---
     const kebabMenuButton = document.getElementById('kebab-menu-button');
     const dropdownMenu = document.getElementById('dropdown-menu');

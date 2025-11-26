@@ -154,6 +154,57 @@ footer {
     font-size: 0.9rem; 
 }
 
+/* Visitor Counter Styles */
+.visitor-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+    padding: 15px 20px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.visitor-counter:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.visitor-counter i {
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+    animation: pulse-icon 2s ease-in-out infinite;
+}
+
+.visitor-count {
+    font-weight: 600;
+    color: var(--primary-blue);
+    min-width: 50px;
+    text-align: center;
+}
+
+@keyframes pulse-icon {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+@keyframes counter-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.visitor-count.pop-animation {
+    animation: counter-pop 0.4s ease-out;
+}
+
 .profile-pic, .animated-item {
     opacity: 0;
     transform: translateY(20px);
