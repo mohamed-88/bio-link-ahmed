@@ -347,76 +347,207 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// --- (نوو) Beşê 8: Lojîka FAQ Accordion ---
 	
-	    // --- (نوو) Beşê 9: Lojîka Pull-to-Refresh ---
-	    const ptrIndicator = document.getElementById('ptr-indicator');
-        const spinner = document.getElementById('ptr-svg');
-	    const REFRESH_THRESHOLD = 80; // Pîkselên ku pêdivî ye were kişandin
-	    const MAX_PULL = 150; // Pîkselên herî zêde yên kişandinê
-	    let startY = 0;
-	    let currentY = 0;
-	    let isPulling = false;
-	    let isRefreshing = false;
+	    // // --- (نوو) Beşê 9: Lojîka Pull-to-Refresh ---
+	    // const ptrIndicator = document.getElementById('ptr-indicator');
+        // const spinner = document.getElementById('ptr-svg');
+	    // const REFRESH_THRESHOLD = 80; // Pîkselên ku pêdivî ye were kişandin
+	    // const MAX_PULL = 150; // Pîkselên herî zêde yên kişandinê
+	    // let startY = 0;
+	    // let currentY = 0;
+	    // let isPulling = false;
+	    // let isRefreshing = false;
 	
-	    const handlePull = (e) => {
-	        // Tenê dema ku li serê rûpelê ye dest pê bike
-	        if (window.scrollY > 0 || isRefreshing) return;
+	    // const handlePull = (e) => {
+	    //     // Tenê dema ku li serê rûpelê ye dest pê bike
+	    //     if (window.scrollY > 0 || isRefreshing) return;
 	
-	        if (e.type === 'touchstart') {
-	            startY = e.touches[0].clientY;
-	            isPulling = true;
-	        } else if (e.type === 'touchmove' && isPulling) {
-	            currentY = e.touches[0].clientY;
-	            let pullDistance = currentY - startY;
+	    //     if (e.type === 'touchstart') {
+	    //         startY = e.touches[0].clientY;
+	    //         isPulling = true;
+	    //     } else if (e.type === 'touchmove' && isPulling) {
+	    //         currentY = e.touches[0].clientY;
+	    //         let pullDistance = currentY - startY;
 	
-	            if (pullDistance > 0) {
-	                e.preventDefault(); // Rê li ber scrolla normal digire
+	    //         if (pullDistance > 0) {
+	    //             e.preventDefault(); // Rê li ber scrolla normal digire
 	                
-	                // Bi nermî sînorê kişandinê bicîh tîne
-	                const easedPull = Math.min(pullDistance, MAX_PULL);
+	    //             // Bi nermî sînorê kişandinê bicîh tîne
+	    //             const easedPull = Math.min(pullDistance, MAX_PULL);
 	                
-	                // Bilindahiya nîşankerê nûve dike
-	                ptrIndicator.style.height = `${easedPull}px`;
+	    //             // Bilindahiya nîşankerê nûve dike
+	    //             ptrIndicator.style.height = `${easedPull}px`;
 	
-	                // Eger gihîşt sînorê nûvekirinê, nîşan dide ku amade ye
-	                if (easedPull >= REFRESH_THRESHOLD) {
-	                    ptrIndicator.classList.add('releasing');
-	                } else {
-	                    ptrIndicator.classList.remove('releasing');
-	                }
-	            } else {
-	                // Eger ber bi jor ve biçe, kişandinê betal dike
-	                isPulling = false;
-	                ptrIndicator.style.height = '0';
-	            }
-	        } else if (e.type === 'touchend' && isPulling) {
-	            isPulling = false;
-	            ptrIndicator.classList.remove('releasing');
+	    //             // Eger gihîşt sînorê nûvekirinê, nîşan dide ku amade ye
+	    //             if (easedPull >= REFRESH_THRESHOLD) {
+	    //                 ptrIndicator.classList.add('releasing');
+	    //             } else {
+	    //                 ptrIndicator.classList.remove('releasing');
+	    //             }
+	    //         } else {
+	    //             // Eger ber bi jor ve biçe, kişandinê betal dike
+	    //             isPulling = false;
+	    //             ptrIndicator.style.height = '0';
+	    //         }
+	    //     } else if (e.type === 'touchend' && isPulling) {
+	    //         isPulling = false;
+	    //         ptrIndicator.classList.remove('releasing');
 	            
-	            const pullDistance = currentY - startY;
+	    //         const pullDistance = currentY - startY;
 	
-	            if (pullDistance >= REFRESH_THRESHOLD) {
-	                // Nûvekirinê dest pê dike
-	                isRefreshing = true;
-	                ptrIndicator.classList.add('loading');
+	    //         if (pullDistance >= REFRESH_THRESHOLD) {
+	    //             // Nûvekirinê dest pê dike
+	    //             isRefreshing = true;
+	    //             ptrIndicator.classList.add('loading');
 	                
-	                // Simulekirina barkirina daneyan û nûvekirina rûpelê
-	                setTimeout(() => {
-	                    // Dema ku barkirin qediya, rûpelê nûve dike
-	                    window.location.reload();
-	                }, 1500); // 1.5 saniye ji bo dîtina spînnerê
+	    //             // Simulekirina barkirina daneyan û nûvekirina rûpelê
+	    //             setTimeout(() => {
+	    //                 // Dema ku barkirin qediya, rûpelê nûve dike
+	    //                 window.location.reload();
+	    //             }, 1500); // 1.5 saniye ji bo dîtina spînnerê
 	
-	            } else {
-	                // Vedigere rewşa destpêkê
-	                ptrIndicator.style.height = '0';
-	            }
-	        }
-	    };
+	    //         } else {
+	    //             // Vedigere rewşa destpêkê
+	    //             ptrIndicator.style.height = '0';
+	    //         }
+	    //     }
+	    // };
 	
-	    if (ptrIndicator) {
-	        document.addEventListener('touchstart', handlePull, { passive: false });
-	        document.addEventListener('touchmove', handlePull, { passive: false });
-	        document.addEventListener('touchend', handlePull, { passive: false });
-	    }
+	    // if (ptrIndicator) {
+	    //     document.addEventListener('touchstart', handlePull, { passive: false });
+	    //     document.addEventListener('touchmove', handlePull, { passive: false });
+	    //     document.addEventListener('touchend', handlePull, { passive: false });
+	    // }
+
+        // --- Beşê 99: Lojîka Pull-to-Refresh (PTR) ---
+
+const ptrIndicator = document.getElementById('ptr-indicator');
+const ptrSVG = document.getElementById('ptr-svg');
+const container = document.querySelector('.container');
+const headerControls = document.querySelector('.header-controls'); // نوو
+let startY = 0;
+let isPulling = false;
+let maxPull = 120; // مەزنترین دووری بۆ گرتنێ (بۆ وێ چەندێ کو گەلەک درێژ نەبیت)
+const releaseThreshold = 70; // دوورییا پێتڤی بۆ دهێنە Loading
+
+function handleTouchStart(e) {
+    if (window.scrollY === 0 && !ptrIndicator.classList.contains('loading')) {
+        startY = e.touches[0].clientY;
+        isPulling = true;
+        
+        // دیسان چاڤدێرییا eventên بزاڤێ بکە
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        document.addEventListener('touchend', handleTouchEnd);
+        
+        // ئەڤە دڤێت بۆ کو Indicator بێی گێڕانێ دیار ببت (بێی animation)
+        ptrIndicator.classList.remove('loading');
+        container.style.transition = 'none'; // ڕاگرتنا ڤەگوهاستنا گشتی
+        headerControls.style.transition = 'none';
+    }
+}
+
+function handleTouchMove(e) {
+    if (!isPulling) return;
+
+    const currentY = e.touches[0].clientY;
+    let deltaY = currentY - startY;
+
+    if (deltaY > 0) {
+        e.preventDefault(); 
+        
+        // هێدی دکەین (Friction) ل سەر کێشانا پەرەی
+        const pullDistance = Math.min(deltaY * 0.5, maxPull);
+        
+        // *گرنگ*: سەفحێ ب تەواوی دگەل بزاڤێ دکێشینە خار
+        container.style.transform = `translateY(${pullDistance}px)`;
+        headerControls.style.transform = `translateY(${pullDistance}px)`;
+
+        // Indicator ل جهێ خوە یێ سەرەکی دمینیت (fixed) لێ دڤێت Indicator Height ل گۆری pullDistance بهێتە ڤەڤەکرن.
+        ptrIndicator.style.height = `${pullDistance}px`;
+
+        // گوهارتنا گۆشێ (Angle) یێ SVG - هێدی هێدی دگێڕینین
+        let rotation = Math.min(pullDistance, releaseThreshold) * 5; 
+        ptrSVG.style.transform = `scale(1) rotate(${rotation}deg)`;
+        
+        // هێدی هێدی دەرکەڤیت
+        ptrSVG.style.opacity = Math.min(pullDistance / 50, 1); 
+        ptrIndicator.classList.add('releasing');
+
+        if (pullDistance >= releaseThreshold) {
+             ptrIndicator.classList.add('ready-to-refresh');
+        } else {
+             ptrIndicator.classList.remove('ready-to-refresh');
+        }
+
+    } else {
+        // ئەگەر بۆ سەر دچیت
+        isPulling = false;
+        container.style.transform = `translateY(0px)`;
+        headerControls.style.transform = `translateY(0px)`;
+        ptrIndicator.style.height = `0px`;
+        ptrSVG.style.opacity = 0;
+    }
+}
+
+function handleTouchEnd() {
+    if (!isPulling) return;
+
+    isPulling = false;
+    document.removeEventListener('touchmove', handleTouchMove);
+    document.removeEventListener('touchend', handleTouchEnd);
+    
+    // ڤەگێڕاندنا ڤەگوهاستنا (Transition) بۆ کو ڤەگەڕیانا Loading هێدی بیت
+    container.style.transition = 'transform 0.3s ease-out';
+    headerControls.style.transition = 'transform 0.3s ease-out';
+
+    const currentPull = parseInt(ptrIndicator.style.height);
+
+    if (currentPull >= releaseThreshold) {
+        // LOADING STATE
+        ptrIndicator.classList.add('loading');
+        ptrIndicator.style.height = `70px`; 
+        container.style.transform = `translateY(70px)`; // سەفحێ ل 70px ب راگریت
+        headerControls.style.transform = `translateY(70px)`;
+        
+        ptrSVG.style.transform = `scale(1) rotate(0deg)`;
+        
+        refreshPage(); 
+
+    } else {
+        // RESET
+        container.style.transform = `translateY(0px)`;
+        headerControls.style.transform = `translateY(0px)`;
+        ptrIndicator.style.height = `0px`;
+        ptrSVG.style.opacity = 0;
+        ptrSVG.style.transform = `scale(0.8) rotate(0deg)`;
+    }
+    
+    ptrIndicator.classList.remove('releasing');
+    ptrIndicator.classList.remove('ready-to-refresh');
+}
+
+// فەنکشەنا Refresh (ل ڤێرێ دڤێت تو گوهارتنێ بکەی)
+function refreshPage() {
+    console.log("Refreshing data...");
+    
+    // 1. Refresh Logic (بۆ نموونە: AJAX call for new data)
+    
+    // 2. پاشان، وەختێ کار دوماهیک هات، Indicator ڤەگێڕە
+    setTimeout(() => {
+        ptrIndicator.classList.remove('loading');
+        
+        // ڤەگێڕانا سەفحێ بۆ جهێ سەرەکی (دێ ب transition هێدی ڤەگەریت)
+        container.style.transform = `translateY(0px)`;
+        headerControls.style.transform = `translateY(0px)`;
+        
+        ptrIndicator.style.height = `0px`;
+        ptrSVG.style.opacity = 0;
+    }, 2000); // 2 سانیە بۆ دیتنا Loading
+}
+
+// Events
+document.addEventListener('touchstart', handleTouchStart);
+
+
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
