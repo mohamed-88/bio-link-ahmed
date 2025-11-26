@@ -345,7 +345,78 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-        // --- (نوو) Beşê 8: Lojîka FAQ Accordion ---
+	// --- (نوو) Beşê 8: Lojîka FAQ Accordion ---
+	
+	    // --- (نوو) Beşê 9: Lojîka Pull-to-Refresh ---
+	    const ptrIndicator = document.getElementById('ptr-indicator');
+        const spinner = document.getElementById('ptr-svg');
+	    const REFRESH_THRESHOLD = 80; // Pîkselên ku pêdivî ye were kişandin
+	    const MAX_PULL = 150; // Pîkselên herî zêde yên kişandinê
+	    let startY = 0;
+	    let currentY = 0;
+	    let isPulling = false;
+	    let isRefreshing = false;
+	
+	    const handlePull = (e) => {
+	        // Tenê dema ku li serê rûpelê ye dest pê bike
+	        if (window.scrollY > 0 || isRefreshing) return;
+	
+	        if (e.type === 'touchstart') {
+	            startY = e.touches[0].clientY;
+	            isPulling = true;
+	        } else if (e.type === 'touchmove' && isPulling) {
+	            currentY = e.touches[0].clientY;
+	            let pullDistance = currentY - startY;
+	
+	            if (pullDistance > 0) {
+	                e.preventDefault(); // Rê li ber scrolla normal digire
+	                
+	                // Bi nermî sînorê kişandinê bicîh tîne
+	                const easedPull = Math.min(pullDistance, MAX_PULL);
+	                
+	                // Bilindahiya nîşankerê nûve dike
+	                ptrIndicator.style.height = `${easedPull}px`;
+	
+	                // Eger gihîşt sînorê nûvekirinê, nîşan dide ku amade ye
+	                if (easedPull >= REFRESH_THRESHOLD) {
+	                    ptrIndicator.classList.add('releasing');
+	                } else {
+	                    ptrIndicator.classList.remove('releasing');
+	                }
+	            } else {
+	                // Eger ber bi jor ve biçe, kişandinê betal dike
+	                isPulling = false;
+	                ptrIndicator.style.height = '0';
+	            }
+	        } else if (e.type === 'touchend' && isPulling) {
+	            isPulling = false;
+	            ptrIndicator.classList.remove('releasing');
+	            
+	            const pullDistance = currentY - startY;
+	
+	            if (pullDistance >= REFRESH_THRESHOLD) {
+	                // Nûvekirinê dest pê dike
+	                isRefreshing = true;
+	                ptrIndicator.classList.add('loading');
+	                
+	                // Simulekirina barkirina daneyan û nûvekirina rûpelê
+	                setTimeout(() => {
+	                    // Dema ku barkirin qediya, rûpelê nûve dike
+	                    window.location.reload();
+	                }, 1500); // 1.5 saniye ji bo dîtina spînnerê
+	
+	            } else {
+	                // Vedigere rewşa destpêkê
+	                ptrIndicator.style.height = '0';
+	            }
+	        }
+	    };
+	
+	    if (ptrIndicator) {
+	        document.addEventListener('touchstart', handlePull, { passive: false });
+	        document.addEventListener('touchmove', handlePull, { passive: false });
+	        document.addEventListener('touchend', handlePull, { passive: false });
+	    }
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
